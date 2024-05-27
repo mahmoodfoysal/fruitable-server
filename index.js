@@ -36,6 +36,7 @@ async function run() {
     const productsCollection = database.collection("products");
     const reviewCollection = database.collection("reviews");
     const ordersCollection = database.collection("orders");
+    const bannerOfferProduct = database.collection("banner-offer");
 
 
     // ########################## all post api are write here ###############################
@@ -67,6 +68,13 @@ async function run() {
         res.send(result);
     });
 
+    app.post('/bannerOffer', async(req, res) => {
+      const postBannerOffer = req.body;
+      console.log(postBannerOffer);
+      const result = await bannerOfferProduct.insertOne(postBannerOffer);
+      res.send(result);
+    });
+
     // ####################### all get api are write here ######################### 
 
     app.get('/category', async(req, res) => {
@@ -91,9 +99,13 @@ async function run() {
         const getOrders = ordersCollection.find();
         const result = await getOrders.toArray();
         res.send(result);
-    })
+    });
 
-
+    app.get('/bannerOffer', async(req, res) => {
+      const getBannerOffer = bannerOfferProduct.find();
+      const result = await getBannerOffer.toArray();
+      res.send(result);
+    });
 
 
 
