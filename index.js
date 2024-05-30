@@ -36,7 +36,8 @@ async function run() {
     const productsCollection = database.collection("products");
     const reviewCollection = database.collection("reviews");
     const ordersCollection = database.collection("orders");
-    const bannerOfferProduct = database.collection("banner-offer");
+    const bannerOfferProductCollection = database.collection("banner-offer");
+    const subscribeCollection = database.collection("promotionalMail")
 
 
     // ########################## all post api are write here ###############################
@@ -71,9 +72,16 @@ async function run() {
     app.post('/bannerOffer', async(req, res) => {
       const postBannerOffer = req.body;
       console.log(postBannerOffer);
-      const result = await bannerOfferProduct.insertOne(postBannerOffer);
+      const result = await bannerOfferProductCollection.insertOne(postBannerOffer);
       res.send(result);
     });
+
+    app.post('/promotionalMail', async(req, res) => {
+      const postPromotionalMail = req.body;
+      console.log(postPromotionalMail);
+      const result = await subscribeCollection.insertOne(postPromotionalMail);
+      res.send(result);
+    })
 
     // ####################### all get api are write here ######################### 
 
@@ -102,10 +110,16 @@ async function run() {
     });
 
     app.get('/bannerOffer', async(req, res) => {
-      const getBannerOffer = bannerOfferProduct.find();
+      const getBannerOffer = bannerOfferProductCollection.find();
       const result = await getBannerOffer.toArray();
       res.send(result);
     });
+
+    app.get('/promotionalMail', async(req, res) => {
+      const getPromotionalMail = subscribeCollection.find();
+      const result = await getPromotionalMail.toArray();
+      res.send(result);
+    })
 
 
 
